@@ -17,3 +17,9 @@ function listeners(channel,name){
 }
 
 listeners(red,"red");
+red.send("hello there my dear!!");
+
+setTimeout(function(){
+  console.log("set timeout fired ");
+  red.close();
+},2000);

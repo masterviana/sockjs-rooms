@@ -9,7 +9,6 @@ var sockjs_opts = {
   sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"
 };
 var service = sockjs.createServer(sockjs_opts);
-
 var multiplexer = new multichannelServer(service);
 
 var red = multiplexer.registerChannel('red');
@@ -27,9 +26,7 @@ red.on('end',function(){
   console.log("sSERVER: red channel was end!");
 });
 
-setTimeout(function(){
-  red.emit("close");
-},3000);
+
 
 // var bob = multiplexer.registerChannel('bob');
 // bob.on('connection', function(conn) {
