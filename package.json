@@ -1,0 +1,30 @@
+{
+  "name": "sockjs-rooms",
+  "version": "1.0.1",
+  "description": "allow create rooms for each channel",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masterviana/sockjs-rooms.git"
+  },
+  "keywords": [
+    "sockjs",
+    "channels",
+    "rooms"
+  ],
+  "author": "masterviana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masterviana/sockjs-rooms/issues"
+  },
+  "homepage": "https://github.com/masterviana/sockjs-rooms#readme",
+  "dependencies": {
+    "async": "^1.5.2"
+  }
+}
