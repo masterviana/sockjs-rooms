@@ -1,7 +1,7 @@
 {
   "name": "sockjs-rooms",
   "version": "1.0.1",
-  "description": "allow create rooms for each channel",
+  "description": "small pub sub system on top of sockjs",
   "main": "index.js",
   "directories": {
     "example": "examples"
