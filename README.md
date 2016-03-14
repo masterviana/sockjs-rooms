@@ -17,7 +17,7 @@ sockjs-rooms is a libray on top of SOCKJS that allow you create channels (rooms)
 
 ```javascript
 var sockjs = require('sockjs');
-var RoomServer = require('../lib/server.js');
+var RoomServer = require('sockjs-rooms');
 
 var sockjs_opts = {
   sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"
@@ -44,7 +44,7 @@ latency.on('connection', function(conn) {
 ## Node Client
 
 ```javascript
-var multichannelClient = require('sockjs-multichannel').client;
+var multichannelClient = require('sockjs-rooms').client;
 var multiClient = new multichannelClient("http://localhost:9999/multiplex");
 
 var latency = multiClient.channel("latency");
@@ -52,7 +52,7 @@ var latency = multiClient.channel("latency");
 latency.on("message",function(message){
   var startDate = +new Date();
   var backMessage = JSON.parse(message.data);
-  if(backMessage && backMessage ){
+  if(backMessage){
     var endDate = +new Date();
     var diff = endDate - startDate;
     console.log("latency is ",diff,'ms');
@@ -61,7 +61,7 @@ latency.on("message",function(message){
 
 setInterval(function(){
   var start = +new Date();
-  var message = { type:1, startTime : start }
+  var message = { startTime : start }
   latency.send(JSON.stringify(message));
 },500);
 
