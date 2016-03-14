@@ -1,19 +1,24 @@
 var http = require('http');
 var express = require('express');
 var sockjs = require('sockjs');
-// var multichannelServer = require('sockjs-multichannel').server;
-var multichannelServer = require('../lib/server.js');
-
+var RoomServer = require('../lib/server.js');
 
 var sockjs_opts = {
   sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"
 };
 var service = sockjs.createServer(sockjs_opts);
-var multiplexer = new multichannelServer(service);
+var server = new RoomServer(service);
 
-var red = multiplexer.registerChannel('red');
+var red = server.registerChannel('red');
 red.on('connection', function(conn) {
-  conn.write('Red is conncted');
+  conn.write('Red is connected');
+  conn.on('data', function(data) {
+    conn.write(data);
+  });
+});
+
+var latency = server.registerChannel('latency');
+latency.on('connection', function(conn) {
   conn.on('data', function(data) {
     conn.write(data);
   });
@@ -26,23 +31,6 @@ red.on('end',function(){
   console.log("sSERVER: red channel was end!");
 });
 
-
-
-// var bob = multiplexer.registerChannel('bob');
-// bob.on('connection', function(conn) {
-//   conn.write('bob is conncted');
-//   conn.on('data', function(data) {
-//     conn.write( data);
-//   });
-// });
-//
-// var carl = multiplexer.registerChannel('carl');
-// carl.on('connection', function(conn) {
-//   conn.write('bob is conncted');
-//   conn.on('data', function(data) {
-//     conn.write( data);
-//   });
-// });
 
 var app = express();
 var server = http.createServer(app);
