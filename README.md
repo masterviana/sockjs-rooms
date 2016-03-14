@@ -22,9 +22,12 @@ var RoomServer = require('sockjs-rooms');
 var sockjs_opts = {
   sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"
 };
+//create service with sockjs
 var service = sockjs.createServer(sockjs_opts);
+//suply sockjs service to room server 
 var server = new RoomServer(service);
 
+//register channel on server
 var red = server.registerChannel('red');
 red.on('connection', function(conn) {
   conn.write('Red is connected');
@@ -33,6 +36,7 @@ red.on('connection', function(conn) {
   });
 });
 
+//create new channel only for reply message
 var latency = server.registerChannel('latency');
 latency.on('connection', function(conn) {
   conn.on('data', function(data) {
@@ -45,10 +49,13 @@ latency.on('connection', function(conn) {
 
 ```javascript
 var multichannelClient = require('sockjs-rooms').client;
+//create sockjs-room client with server address
 var multiClient = new multichannelClient("http://localhost:9999/multiplex");
 
+//register client on channel latency
 var latency = multiClient.channel("latency");
 
+//listening message event for channel latency
 latency.on("message",function(message){
   var startDate = +new Date();
   var backMessage = JSON.parse(message.data);
@@ -62,16 +69,17 @@ latency.on("message",function(message){
 setInterval(function(){
   var start = +new Date();
   var message = { startTime : start }
+  //sent message for client latency
   latency.send(JSON.stringify(message));
 },500);
 
+//register other channel on this client
 var red = multiClient.channel("red");
 red.on('open',function(){});
 red.on('close',function(){});
 red.on('message',function(message){
   console.log('data from channel red ',message)
 });
-
 ```
 
 ## Browser Client
