@@ -26,13 +26,20 @@ var topics = {}
 topics['red'] = {}
 topics['red']['100'] = []
 topics['red']['200'] = []
+topics['red']['300'] = []
 topics['red']['100'].push({id:1,mgs : "hello"})
 topics['red']['200'].push({id:2,mgs : "hi"})
+topics['red']['300'].push({id:3,mgs : "300 e tal"})
 
+// delete topics['red']['300']
 
-debug("start async for iteration");
-async.each(topics['red'], function(i, callback) {
-    debug(i)
+// for(item in topics['red']){
+//   console.log(item)
+// }
+
+async.forEachOf(topics['red'], function(value,key,callback) {
+    console.log(key)
+    console.log(value)
     debug('======')
 
     callback();

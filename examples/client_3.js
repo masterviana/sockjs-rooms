@@ -9,7 +9,7 @@ function listeners(channel,name){
     console.log("OPEN Channel ",name);
   });
   channel.on("close",function(){
-    console.log("CLOSE Channel ",name);
+    console.log("CLOSE Channel 3 ",name);
   });
   channel.on("message",function(message){
       console.log("DATA from  Channel ",name, " data : ",message);
@@ -17,9 +17,8 @@ function listeners(channel,name){
 }
 
 listeners(red,"red");
-red.send("hello there my dear!!");
 
-setTimeout(function(){
-  console.log("set timeout fired ");
-  red.close();
-},2000);
+setInterval(function(){
+  red.send("Client 3 sent on message. OKAY?");
+
+},1000);
