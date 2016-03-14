@@ -14,7 +14,7 @@ sockjs-rooms is a libray on top of SOCKJS that allow you create channels (rooms)
 ### Simple server sample
 
 ```javascript
-  var sockjs = require('sockjs');
+var sockjs = require('sockjs');
 var RoomServer = require('../lib/server.js');
 
 var sockjs_opts = {
@@ -38,3 +38,64 @@ latency.on('connection', function(conn) {
   });
 });
 ```
+
+## Node Client
+
+```javascript
+var multichannelClient = require('sockjs-multichannel').client;
+var multiClient = new multichannelClient("http://localhost:9999/multiplex");
+
+var latency = multiClient.channel("latency");
+
+latency.on("message",function(message){
+  var startDate = +new Date();
+  var backMessage = JSON.parse(message.data);
+  if(backMessage && backMessage ){
+    var endDate = +new Date();
+    var diff = endDate - startDate;
+    console.log("latency is ",diff,'ms');
+  }
+});
+
+setInterval(function(){
+  var start = +new Date();
+  var message = { type:1, startTime : start }
+  latency.send(JSON.stringify(message));
+},500);
+
+var red = multiClient.channel("red");
+red.on('open',function(){});
+red.on('close',function(){});
+red.on('message',function(message){
+  console.log('data from channel red ',message)
+});
+
+```
+
+## Browser Client
+
+
+## Protocol
+--------
+
+The underlying protocol is quite simple. Each message is a string consisting of
+three comma separated parts: _type_, _topic_ and _payload_. There are
+three valid message types:
+
+ * `sub` - expresses a will to subscribe to a given _topic_.
+ * `msg` - a message with _payload_ is being sent on a _topic_.
+ * `uns` - a will to unsubscribe from a _topic_.
+
+Invalid messages like wrong unsubscriptions or publishes to a _topic_
+to which a client was not subscribed to are simply ignored.
+
+This protocol assumes that both parties are generally willing to
+cooperate and that no party makes errors. All invalid
+messages should be ignored.
+
+It's important to notice that the namespace is shared between both
+parties. It is not a good idea to use the same topic names on the
+client and on the server side because both parties may unsubscribe
+the other from a topic.
+
+
