@@ -11,11 +11,12 @@ To learn more about the problem of multiplexing channels in a single connection 
 ## Table of contents
 
 - [Server](#server)
-- [Node Client](#nodeclient)
-- [Browser Client](#browserclient)
+- [Node Client](#node-client)
+- [Browser Client](#browser-client)
 - [Protocol](#protocol)
 
 ## Server
+----
 
 ### Simple server sample
 
@@ -53,6 +54,7 @@ This example we connect register 4 channel, red, bob, carl and on channel for me
 You can find full example under the folder example.
 
 ## Node Client
+-----
 
 ```javascript
 var multichannelClient = require('sockjs-rooms').client;
@@ -90,6 +92,7 @@ red.on('message',function(message){
 ```
 
 ## Browser Client
+-------------
 
 On the client side (browser) load library like that:
 
@@ -101,7 +104,7 @@ Alternatively, if you're using SSL:
     <script src="https://d1fxtkz8shb9d2.cloudfront.net/websocket-multiplex-0.1.js">
       </script>
 
-There is a full sample of .html client using this libray under the folder example, check the full example of this. This libray have the source of websocket-multiplex under the folder public. 
+There is a full sample of .html client using this libray under the folder example, check the full example of this. This libray have the source of websocket-multiplex under the folder public.
 
 
 
