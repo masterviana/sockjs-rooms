@@ -1,6 +1,6 @@
 {
   "name": "sockjs-rooms",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "small pub sub system on top of sockjs",
   "main": "index.js",
   "directories": {
