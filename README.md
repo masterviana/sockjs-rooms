@@ -4,6 +4,10 @@
 
 sockjs-rooms is a libray on top of SOCKJS that allow you create channels (rooms) over a single over a SockJS connection the concept of room applies due to the fact that all clients registered in some channel are able to get the message sent to this channel. This creates a simple pub/sub where clients are able to subscribe some channel and once anyone send a message to a channel the server broadcast this message to all client's registered on room (channel).
 
+This libray an this protocol was created on top of this libray [websocket-multiplex](https://github.com/sockjs/websocket-multiplex)
+
+To learn more about the problem of multiplexing channels in a single connection please read more [here](https://www.rabbitmq.com/blog/2012/02/23/how-to-compose-apps-using-websockets/)
+
 ## Table of contents
 
 - [Server](#server)
@@ -24,7 +28,7 @@ var sockjs_opts = {
 };
 //create service with sockjs
 var service = sockjs.createServer(sockjs_opts);
-//suply sockjs service to room server 
+//suply sockjs service to room server
 var server = new RoomServer(service);
 
 //register channel on server
@@ -44,6 +48,9 @@ latency.on('connection', function(conn) {
   });
 });
 ```
+
+This example we connect register 4 channel, red, bob, carl and on channel for mesure latency
+You can find full example under the folder example.
 
 ## Node Client
 
@@ -84,6 +91,19 @@ red.on('message',function(message){
 
 ## Browser Client
 
+On the client side (browser) load library like that:
+
+    <script src="http://cdn.sockjs.org/websocket-multiplex-0.1.js">
+      </script>
+
+Alternatively, if you're using SSL:
+
+    <script src="https://d1fxtkz8shb9d2.cloudfront.net/websocket-multiplex-0.1.js">
+      </script>
+
+There is a full sample of .html client using this libray under the folder example, check the full example of this. This libray have the source of websocket-multiplex under the folder public. 
+
+
 
 ## Protocol
 --------
@@ -107,5 +127,3 @@ It's important to notice that the namespace is shared between both
 parties. It is not a good idea to use the same topic names on the
 client and on the server side because both parties may unsubscribe
 the other from a topic.
-
-

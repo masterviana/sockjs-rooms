@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/masterviana/sockjs-rooms#readme",
   "dependencies": {
-    "async": "^1.5.2"
+    "async": "^1.5.2",
+    "sockjs-client-ws": "^0.1.0"
   }
 }
